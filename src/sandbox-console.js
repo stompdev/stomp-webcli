@@ -376,13 +376,107 @@ var Sandbox = {
 					result : this.helpText
 				});
 			}
+			
+			commands = command.toLowerCase();
+			commands = commands.replace(/\s+/g, " ").split(" ");
+			
+			if ( commands[0] === ':disconnect' ) {
+				stomp_disconnect();
+				return this.model.addHistory({
+					command : ':disconnect',
+					result : 'Disconnect from server'
+				});
+			} else if ( commands[0] === ':connect' ) {
+				if ( commands.length < 4 ) {
+					return this.model.addHistory({
+						command : ':connect',
+						result : 'Usage: :connect <login> <password> <hostname:port>'
+					});
+				} else {
+					stomp_connect(commands[1], commands[2], commands[3]);
+					return this.model.addHistory({
+						command : ':connect',
+						result : 'Connecting to server'
+					});
+				}
+			} else if ( commands[0] === ':set_all' ) {
+				if ( commands.length < 4 ) {
+					return this.model.addHistory({
+						command : ':set_all',
+						result : 'Usage: :set_all <uuid> <update> <periodic>'
+					});
+				} else {
+					stomp_set_all(commands[1], commands[2], commands[3]);
+					return this.model.addHistory({
+						command : ':set_all',
+						result : 'Set parameters for all sensors on \"' + commands[1] + '\" to {update=' + commands[2] + ', periodic=' + commands[3] + '}'
+					});
+				}
+			} else if ( commands[0] === ':set') {
+				if ( commands.length < 5 ) {
+					return this.model.addHistory({
+						command : ':set',
+						result : 'Usage: :set <uuid> <sensor> <update> <periodic>'
+					});
+				} else {
+					stomp_set(commands[1], commands[2], command[3], command[4]);
+					return this.model.addHistory({
+						command : ':set',
+						result : 'Set parameters for sensor \"' + commands[2] + '\" on \"' + commands[1] + '\" to {update=' + commands[3] + ', periodic=' + commands[4] + '}'
+					});
+				}
+			} else if ( commands[0] === ':get' ) {
+				if ( commands.length < 3 ) {
+					return this.model.addHistory({
+						command : ':get',
+						result : 'Usage: :get <uuid> <sensor>'
+					});
+				} else {
+					stomp_get(commands[1], commands[2]);
+					return this.model.addHistory({
+						command : ':get',
+						result : 'Get parameters from sensor \"' + commands[2] + '\" on \"' + commands[1] + '\"'
+					});
+				}
+			} else if ( commands[0] === ':update' ) {
+				if ( commands.length < 3 ) {
+					return this.model.addHistory({
+						command : ':update',
+						result : 'Usage: :update <uuid> <sensor>'
+					});
+				} else {
+					stomp_update(commands[1], commands[2]);
+					return this.model.addHistory({
+						command : ':update',
+						result : 'Get values from sensor \"' + commands[2] + '\" on \"' + commands[1] + '\"'
+					});
+				}
+			} else if ( commands[0] === ':log' ) {
+				if ( commands.length < 2 ) {
+					return this.model.addHistory({
+						command : ':log',
+						result : 'Usage: :log <sensor>'
+					});
+				} else {
+					$.ajax({type: 'GET', url : '/cgi-bin/tail.cgi?' + commands[1],
+						success: function (data) {
+							$('#stomp_output').append(data);
+						}
+					});
+					return this.model.addHistory({
+						command : ':log',
+						result : 'Get log for sensor \"' + commands[1] + '\"'
+					});
+				}
+			}
+			
 			// `:load <script src>`
 			if ( command.indexOf(":load") > -1 ) {
 				return this.model.addHistory({
 					command : command,
 					result : this.model.load( command.substring(6) )
 				});
-			} 
+			}
 
 			// If no special commands, return false so the command gets evaluated
 			return false;
