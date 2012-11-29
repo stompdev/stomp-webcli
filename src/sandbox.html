@@ -49,7 +49,11 @@
                     model : new Sandbox.Model({
                         iframe : false, // evaluate commands inside a hidden iframe (default: false)
                         fallback : true // use global eval if iframe isn't available (default: true)
-                    })
+                    }),
+                    placeholder : '// :help for more info',
+                    resultPrefix : '>',
+                    tabCharacter : '',
+                    helpText : 'Usage:\n - :log <uuid> - Display last 100 lines log from selected device\n - :connect <login> <password> - Connect to broker\n - :disconnect - Disconnect from broker, if has been connected\n - :set_all <uuid> <update> <periodic> - Set specified update and periodic for all sensors on selected device\n - :set <uuid> <sensor> <update> <periodic> - Set specified update and periodic for selected sensor on selected device\n - :get <uuid> <sensor> - Get update and periodic for selected sensor on selected device\n - :update <uuid> <sensor> - Update value from selected sensor on selected device'
                 });
                 sandbox.model.load('libs/stilts-stomp.js');
                 sandbox.model.load('stomp-client.js');

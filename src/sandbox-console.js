@@ -388,13 +388,13 @@ var Sandbox = {
 					result : 'Disconnect from server'
 				});
 			} else if ( commands[0] === ':connect' ) {
-				if ( commands.length < 4 ) {
+				if ( commands.length < 3 ) {
 					return this.model.addHistory({
 						command : ':connect',
-						result : 'Usage: :connect <login> <password> <hostname:port>'
+						result : 'Usage: :connect <login> <password>'
 					});
 				} else {
-					stomp_connect(commands[1], commands[2], commands[3]);
+					stomp_connect(commands[1], commands[2], "ibm.suder.net.pl:61623");
 					return this.model.addHistory({
 						command : ':connect',
 						result : 'Connecting to server'
