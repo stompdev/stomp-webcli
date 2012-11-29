@@ -31,7 +31,7 @@ body {
 #sandbox textarea,
 #sandbox textarea:focus {
 	font-size:8px;
-	line-height:1;
+	line-height:1.3;
 	font-weight: normal;
 	font-family:"Consolas", "Andale Mono", "Courier New", "Courier", monospace;
 	border:0 none;
