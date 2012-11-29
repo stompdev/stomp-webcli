@@ -75,7 +75,6 @@ body {
 
 .stomp pre.output {
 	height: 95%;
-	width: 45%;
 }
 
 #sandbox pre.output {

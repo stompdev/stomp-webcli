@@ -56,3 +56,7 @@ function stomp_disconnect() {
         jQuery("#stomp_output").append("Disconnected.</br>");
     }
 }
+
+function stomp_clear() {
+    jQuery("#stomp_output").empty();
+}

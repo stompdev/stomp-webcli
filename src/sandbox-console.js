@@ -368,6 +368,7 @@ var Sandbox = {
 		specialCommands: function(command) {
 			if (command === ":clear") {
 				this.model.destroy();
+				stomp_clear();
 				return true;
 			}
 			if ( command === ":help" ) {
@@ -460,7 +461,7 @@ var Sandbox = {
 				} else {
 					$.ajax({type: 'GET', url : 'https://suder.net.pl/stomp/sensors/cgi-bin/tail.cgi?' + commands[1],
 						success: function (data) {
-							$('#stomp_output').append(data);
+							$('#stomp_output').append('--- Log from \"' + commands[1] + '\" ---\n' + data);
 						}
 					});
 					return this.model.addHistory({
