@@ -458,7 +458,7 @@ var Sandbox = {
 						result : 'Usage: :log <sensor>'
 					});
 				} else {
-					$.ajax({type: 'GET', url : '/cgi-bin/tail.cgi?' + commands[1],
+					$.ajax({type: 'GET', url : 'https://suder.net.pl/stomp/sensors/cgi-bin/tail.cgi?' + commands[1],
 						success: function (data) {
 							$('#stomp_output').append(data);
 						}
