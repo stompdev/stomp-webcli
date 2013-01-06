@@ -391,10 +391,10 @@ var Sandbox = {
 				if ( commands.length < 3 ) {
 					return this.model.addHistory({
 						command : ':connect',
-						result : 'Usage: :connect <login> <password>'
+						result : 'Usage: :connect <login> <password> <IP:port>'
 					});
 				} else {
-					stomp_connect(commands[1], commands[2], "ibm.suder.net.pl:61623");
+					stomp_connect(commands[1], commands[2], commands[3]);
 					return this.model.addHistory({
 						command : ':connect',
 						result : 'Connecting to server'
@@ -450,23 +450,6 @@ var Sandbox = {
 					return this.model.addHistory({
 						command : ':update',
 						result : 'Get values from sensor \"' + commands[2] + '\" on \"' + commands[1] + '\"'
-					});
-				}
-			} else if ( commands[0] === ':log' ) {
-				if ( commands.length < 2 ) {
-					return this.model.addHistory({
-						command : ':log',
-						result : 'Usage: :log <sensor>'
-					});
-				} else {
-					$.ajax({type: 'GET', url : 'https://suder.net.pl/stomp/sensors/cgi-bin/tail.cgi?' + commands[1],
-						success: function (data) {
-							$('#stomp_output').append('--- Log from \"' + commands[1] + '\" ---\n' + data);
-						}
-					});
-					return this.model.addHistory({
-						command : ':log',
-						result : 'Get log for sensor \"' + commands[1] + '\"'
 					});
 				}
 			}
